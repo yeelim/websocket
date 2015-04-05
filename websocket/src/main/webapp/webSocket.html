@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>服务端使用JSR356标准的ServerEndpoint开发的</title>
+	<script type="text/javascript">
+		var webSocket;
+		if (!window.WebSocket) {
+			window.WebSocket = window.MozWebSocket;
+		}
+		if (window.WebSocket) {
+			webSocket = new WebSocket("ws://localhost:8080/websocket/ws/elim");
+			//接收到消息的时候
+			webSocket.onmessage = function(event) {
+				console.log(event);
+				showMsg(event.data);
+			};
+			//连接建立好时
+			webSocket.onopen = function(event) {
+				showMsg("连接已经成功建立！当前浏览器支持WebSocket！");
+			};
+			//关闭对应的连接时
+			webSocket.onclose = function(event) {
+				showMsg("连接已关闭！");
+			};
+		} else {
+			alert("当前浏览器不支持WebSocket协议！");
+		}
+		
+		function showMsg(msg) {
+			var msgs = document.getElementById("msgs");
+			var msgEle = document.createElement("div");
+			msgEle.innerHTML = msg;
+			msgs.appendChild(msgEle);
+		}
+		
+		function sendMsg() {
+			var msg = document.getElementById("sendMsg").value;
+			webSocket.send(msg);
+		}
+		
+		function closeSocket() {
+			webSocket.close();
+		}
+	</script>
+</head>
+<body>
+	<input type="text" id="sendMsg"/>
+	<input type="button" value="发送" onclick="sendMsg()"/>
+	<input type="button" value="关闭连接" onclick="closeSocket()"/>
+	<div><b>通讯过程：</b></div>
+	<div id="msgs"></div>
+</body>
+</html>

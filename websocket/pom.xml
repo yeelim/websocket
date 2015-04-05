@@ -1,0 +1,25 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.elim.learn</groupId>
+	<artifactId>websocket</artifactId>
+	<packaging>war</packaging>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>websocket Maven Webapp</name>
+	<url>http://maven.apache.org</url>
+	<dependencies>
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-web-api</artifactId>
+			<version>7.0</version>
+			<!-- 使用WebSocket时对应的javaee-web-api的scope必须是provided，因为javaee-web-api只提供了WebSocket定义的规范，具体的实现需要应用服务器进行实现，如Tomcat，
+				而应用服务器在实现WebSocket规范时必然已经包含了对应WebSocket规范的依赖，如果再添加javaee-web-api则将导致冲突，结果就是对应的WebSocket服务无法正常访问，前端出现
+				404错误。
+			 -->
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+	<build>
+		<finalName>websocket</finalName>
+	</build>
+</project>
